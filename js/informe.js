@@ -92,7 +92,9 @@
         </tr>
       </thead>`;
 
-    const filas = ZONAS.map((z) => {
+    const zonasOrdenadas = [...ZONAS].sort((a, b) => b.personal.total - a.personal.total);
+
+    const filas = zonasOrdenadas.map((z) => {
       const share = pct(z.personal.total, TOTALES.personal.total);
       return `
         <tr>
