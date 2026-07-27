@@ -131,7 +131,7 @@
     const cont = document.getElementById("zone-list");
     if (!cont) return;
 
-    cont.innerHTML = ZONAS.map((z, idx) => {
+    cont.innerHTML = ZONAS.map((z) => {
       const filasRoles = ROLES
         .filter((r) => z.personal[r.key] > 0)
         .map((r) => `<tr><td>${r.label}</td><td>${fmt.format(z.personal[r.key])}</td></tr>`)
@@ -140,8 +140,8 @@
       const sharePersonal = pct(z.personal.total, TOTALES.personal.total);
 
       return `
-        <article class="zone-card${idx === 0 ? " is-open" : ""}" style="--zona-color:${z.color}">
-          <button class="zone-card__header" type="button" data-zone-toggle aria-expanded="${idx === 0}">
+        <article class="zone-card" style="--zona-color:${z.color}">
+          <button class="zone-card__header" type="button" data-zone-toggle aria-expanded="false">
             <div class="zone-card__title-wrap">
               <span class="zone-card__dot" aria-hidden="true"></span>
               <div>
