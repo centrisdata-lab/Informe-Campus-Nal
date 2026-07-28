@@ -629,11 +629,26 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 14px;
   background: var(--fondo);
   border-radius: var(--radio-sm);
   padding: 12px 14px;
 }
-.zone-oferta-item__label { font-size: 13px; font-weight: 700; color: var(--texto-secundario); }
+.zone-oferta-item__label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--texto-secundario);
+  min-width: 0;
+}
+/* Nota contextual bajo la etiqueta (p. ej. cómo se asignan los enlaces). */
+.zone-oferta-item__label small {
+  display: block;
+  margin-top: 3px;
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--texto-muted);
+}
 .zone-oferta-item__value {
   font-family: var(--fuente-titulos);
   font-weight: 800;

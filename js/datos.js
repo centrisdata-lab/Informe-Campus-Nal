@@ -54,6 +54,8 @@ const ZONAS = [
     informadores: 838,
     coordinadoresZonales: 2,
     enlaceDelegacion: 66,
+    // Única zona donde el enlace se asigna por iglesia y no por departamento.
+    notaEnlace: "Asignados por iglesia: 35 en Bogotá y 31 en Cundinamarca",
   },
   {
     id: "caribe",

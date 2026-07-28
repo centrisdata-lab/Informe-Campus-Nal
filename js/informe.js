@@ -244,7 +244,10 @@
                     <span class="zone-oferta-item__value">${fmt.format(z.coordinadoresZonales)}</span>
                   </div>
                   <div class="zone-oferta-item">
-                    <span class="zone-oferta-item__label">Enlace Campus Delegación</span>
+                    <span class="zone-oferta-item__label">
+                      Enlace Campus Delegación
+                      <small>${z.notaEnlace || "Uno por departamento, asignado por el coordinador zonal"}</small>
+                    </span>
                     <span class="zone-oferta-item__value">${fmt.format(z.enlaceDelegacion)}</span>
                   </div>
                 </div>
