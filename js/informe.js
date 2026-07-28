@@ -36,53 +36,121 @@
     const totalCupos = TOTALES.oferta.cupos;
     const totalDepartamentos = ZONAS.reduce((n, z) => n + z.departamentos.length, 0);
 
+    // Contenido del detalle desplegable de cada tarjeta: una mini
+    // tabla de dos columnas (concepto / valor) que sustenta el total.
+    const tablaRoles = `
+      <table>
+        <thead><tr><th>Rol</th><th>Total</th></tr></thead>
+        <tbody>
+          ${ROLES.map((r) => `<tr><td>${r.label}</td><td>${fmt.format(TOTALES.personal[r.key])}</td></tr>`).join("")}
+          <tr><td>Enlace de profesores</td><td>${fmt.format(TOTALES.personal.enlaceProfesores)}</td></tr>
+          <tr class="fila-total"><td>Total cuerpo académico</td><td>${fmt.format(totalPersonal)}</td></tr>
+        </tbody>
+      </table>`;
+
+    const totalGruposCurso = (c) => ZONAS.reduce((s, z) => s + (c[z.id] || 0), 0);
+    const tablaCursos = `
+      <table>
+        <thead><tr><th>Curso</th><th>Grupos</th></tr></thead>
+        <tbody>
+          ${[...CURSOS_DETALLE].sort((a, b) => totalGruposCurso(b) - totalGruposCurso(a))
+            .map((c) => `<tr><td>${c.curso}</td><td>${fmt.format(totalGruposCurso(c))}</td></tr>`).join("")}
+          <tr class="fila-total"><td>Total grupos (todos los cursos)</td><td>${fmt.format(totalGrupos)}</td></tr>
+        </tbody>
+      </table>`;
+
+    const tablaGruposPorZona = `
+      <table>
+        <thead><tr><th>Zona</th><th>Grupos</th></tr></thead>
+        <tbody>
+          ${[...ZONAS].sort((a, b) => b.oferta.grupos - a.oferta.grupos)
+            .map((z) => `<tr><td>${z.nombre}</td><td>${fmt.format(z.oferta.grupos)}</td></tr>`).join("")}
+          <tr class="fila-total"><td>Total nacional</td><td>${fmt.format(totalGrupos)}</td></tr>
+        </tbody>
+      </table>`;
+
+    const tablaCuposPorZona = `
+      <table>
+        <thead><tr><th>Zona</th><th>Cupos</th></tr></thead>
+        <tbody>
+          ${[...ZONAS].sort((a, b) => b.oferta.cupos - a.oferta.cupos)
+            .map((z) => `<tr><td>${z.nombre}</td><td>${fmt.format(z.oferta.cupos)}</td></tr>`).join("")}
+          <tr class="fila-total"><td>Total nacional</td><td>${fmt.format(totalCupos)}</td></tr>
+        </tbody>
+      </table>`;
+
+    const tablaInformadores = `
+      <table>
+        <thead><tr><th>Zona</th><th>Informadores</th></tr></thead>
+        <tbody>
+          ${[...ZONAS].sort((a, b) => b.informadores - a.informadores)
+            .map((z) => `<tr><td>${z.nombre}</td><td>${fmt.format(z.informadores)}</td></tr>`).join("")}
+          <tr><td>Sin departamento asignado</td><td>${fmt.format(INFORMADORES_SIN_ZONA)}</td></tr>
+          <tr class="fila-total"><td>Total nacional</td><td>${fmt.format(TOTALES.informadores)}</td></tr>
+        </tbody>
+      </table>`;
+
     const kpis = [
       {
         icon: "👥",
         label: "Cuerpo académico total",
         value: fmt.format(totalPersonal),
         delta: `${ZONAS.length} zonas · ${totalDepartamentos} departamentos`,
-        bar: 100,
+        detalle: tablaRoles,
       },
       {
         icon: "📚",
         label: "Cursos activos",
         value: fmt.format(totalCursos),
         delta: `${INFORME_META.notaOferta}`,
-        bar: 100,
+        detalle: tablaCursos,
       },
       {
         icon: "🧩",
         label: "Grupos conformados",
         value: fmt.format(totalGrupos),
         delta: `≈ ${(totalGrupos / totalCursos).toFixed(1)} grupos por curso`,
-        bar: 100,
+        detalle: tablaGruposPorZona,
       },
       {
         icon: "🎓",
         label: "Cupos ofertados",
         value: fmt.format(totalCupos),
         delta: `50 cupos por grupo`,
-        bar: 100,
+        detalle: tablaCuposPorZona,
       },
       {
         icon: "📣",
         label: "Informadores inscritos en proyecto",
         value: fmt.format(TOTALES.informadores),
         delta: `${fmt.format(INFORMADORES_SIN_ZONA)} sin departamento asignado`,
-        bar: 100,
+        detalle: tablaInformadores,
       },
     ];
 
-    cont.innerHTML = kpis.map((k) => `
+    cont.innerHTML = kpis.map((k, idx) => `
       <article class="kpi-card">
-        <div class="kpi-card__icon" aria-hidden="true">${k.icon}</div>
-        <span class="kpi-card__label">${k.label}</span>
-        <span class="kpi-card__value">${k.value}</span>
-        <span class="kpi-card__delta">${k.delta}</span>
-        <div class="kpi-card__bar"><span style="width:${k.bar}%"></span></div>
+        <button class="kpi-card__toggle" type="button" data-kpi-toggle aria-expanded="false" aria-controls="kpi-detalle-${idx}">
+          <div class="kpi-card__icon" aria-hidden="true">${k.icon}</div>
+          <span class="kpi-card__label">${k.label}</span>
+          <span class="kpi-card__value">${k.value}</span>
+          <span class="kpi-card__delta">${k.delta}</span>
+          <div class="kpi-card__bar"><span style="width:100%"></span></div>
+          <span class="kpi-card__hint">Ver el detalle que sustenta esta cifra</span>
+        </button>
+        <div class="kpi-card__detalle" id="kpi-detalle-${idx}">
+          <div class="kpi-card__detalle-inner">${k.detalle}</div>
+        </div>
       </article>
     `).join("");
+
+    cont.querySelectorAll("[data-kpi-toggle]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const card = btn.closest(".kpi-card");
+        const abierta = card.classList.toggle("is-open");
+        btn.setAttribute("aria-expanded", String(abierta));
+      });
+    });
   }
 
   /* ---------------------------------------------------------
@@ -339,9 +407,6 @@
 
     const totalGruposCurso = (c) => ZONAS.reduce((suma, z) => suma + (c[z.id] || 0), 0);
 
-    const cursosOrdenados = [...CURSOS_DETALLE]
-      .sort((a, b) => totalGruposCurso(b) - totalGruposCurso(a));
-
     const thead = `
       <thead>
         <tr>
@@ -351,13 +416,29 @@
         </tr>
       </thead>`;
 
-    const filas = cursosOrdenados.map((c) => `
-      <tr>
-        <td>${c.curso}</td>
-        ${ZONAS.map((z) => `<td>${c[z.id] ? fmt.format(c[z.id]) : "—"}</td>`).join("")}
-        <td class="cell-total">${fmt.format(totalGruposCurso(c))}</td>
-      </tr>
-    `).join("");
+    // Se respeta el orden de CATEGORIAS_CURSO y, dentro de cada una,
+    // el orden en que los cursos aparecen en CURSOS_DETALLE (así los
+    // niveles de un mismo curso — Nivel 1, Nivel 2 — quedan juntos).
+    const filasPorCategoria = CATEGORIAS_CURSO.map((cat) => {
+      const cursos = CURSOS_DETALLE.filter((c) => c.categoria === cat.id);
+      if (!cursos.length) return "";
+
+      const filaCategoria = `
+        <tr class="fila-categoria">
+          <td colspan="${ZONAS.length + 2}">${cat.label}</td>
+        </tr>
+      `;
+
+      const filasCurso = cursos.map((c) => `
+        <tr>
+          <td>${c.curso}</td>
+          ${ZONAS.map((z) => `<td>${c[z.id] ? fmt.format(c[z.id]) : "—"}</td>`).join("")}
+          <td class="cell-total">${fmt.format(totalGruposCurso(c))}</td>
+        </tr>
+      `).join("");
+
+      return filaCategoria + filasCurso;
+    }).join("");
 
     const totalesPorZona = ZONAS.map((z) =>
       CURSOS_DETALLE.reduce((suma, c) => suma + (c[z.id] || 0), 0)
@@ -371,7 +452,7 @@
       </tr>
     `;
 
-    table.innerHTML = thead + `<tbody>${filas}${filaTotal}</tbody>`;
+    table.innerHTML = thead + `<tbody>${filasPorCategoria}${filaTotal}</tbody>`;
   }
 
   /* ---------------------------------------------------------

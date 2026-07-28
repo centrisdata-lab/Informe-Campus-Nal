@@ -299,18 +299,28 @@ html, body {
 
 .kpi-card {
   position: relative;
-  overflow: hidden;
   background: var(--superficie);
   border: 1px solid var(--borde);
   border-radius: var(--radio-md);
-  padding: 20px 20px 18px;
   box-shadow: var(--sombra-card);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  overflow: hidden;
   transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 .kpi-card:hover { transform: translateY(-3px); box-shadow: var(--sombra-card-hover); }
+.kpi-card.is-open:hover { transform: none; }
+
+.kpi-card__toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  padding: 20px 20px 18px;
+  background: none;
+  border: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
 
 .kpi-card__icon {
   display: flex;
@@ -349,7 +359,7 @@ html, body {
   border-radius: 4px;
   background: var(--borde);
   overflow: hidden;
-  margin-top: auto;
+  margin-top: 4px;
 }
 .kpi-card__bar span {
   display: block;
@@ -357,6 +367,65 @@ html, body {
   border-radius: 4px;
   background: linear-gradient(90deg, var(--naranja), var(--naranja-oscuro));
 }
+
+.kpi-card__hint {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--azul-marino-2);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+.kpi-card__toggle:hover .kpi-card__hint,
+.kpi-card__toggle:focus-visible .kpi-card__hint { opacity: 1; }
+.kpi-card.is-open .kpi-card__hint { display: none; }
+.kpi-card__toggle:focus-visible {
+  outline: 3px solid var(--naranja);
+  outline-offset: -3px;
+}
+
+.kpi-card__detalle {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.35s ease;
+}
+.kpi-card.is-open .kpi-card__detalle { max-height: 900px; }
+
+.kpi-card__detalle-inner {
+  padding: 0 20px 18px;
+  border-top: 1px solid var(--borde);
+  margin-top: 2px;
+}
+.kpi-card__detalle-inner table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-top: 12px;
+}
+.kpi-card__detalle-inner th {
+  text-align: left;
+  padding: 6px 4px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--texto-muted);
+  border-bottom: 1px solid var(--borde);
+}
+.kpi-card__detalle-inner td {
+  padding: 6px 4px;
+  border-bottom: 1px solid var(--borde);
+  font-weight: 700;
+  color: var(--texto-primario);
+}
+.kpi-card__detalle-inner td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+.kpi-card__detalle-inner tr:last-child td { border-bottom: none; }
+.kpi-card__detalle-inner tr.fila-total td {
+  color: var(--azul-marino);
+  border-top: 2px solid var(--azul-marino);
+  border-bottom: none;
+}
+.kpi-card__detalle-inner tbody { display: block; max-height: 260px; overflow-y: auto; }
+.kpi-card__detalle-inner thead, .kpi-card__detalle-inner tbody tr { display: table; width: 100%; table-layout: fixed; }
 
 /* ============================================================
    TARJETAS / GRÁFICOS
@@ -703,6 +772,22 @@ html, body {
   font-family: var(--fuente-titulos);
   font-weight: 800;
 }
+
+/* Encabezado discreto de categoría dentro de la tabla de cursos:
+   se nota que agrupa, sin competir con los datos. */
+.data-table tbody tr.fila-categoria td {
+  background: var(--fondo);
+  color: var(--texto-muted);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 8px 10px;
+  text-align: left;
+  border-top: 1px solid var(--borde);
+  border-bottom: 1px solid var(--borde);
+}
+.data-table tbody tr.fila-categoria:hover { background: var(--fondo); }
 
 .data-table .cell-total {
   background: rgba(245, 166, 35, 0.16) !important;

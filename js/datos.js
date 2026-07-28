@@ -153,48 +153,74 @@ const ZONAS = [
    reparten a ninguna zona; se suman aparte al total nacional). */
 const INFORMADORES_SIN_ZONA = 238;
 
+/* Agrupación temática de los cursos (ver piezas "Habilidades
+   Humanas", "Emprendimiento y Empleabilidad", etc.). Define el
+   orden de las categorías en la tabla "Cursos por zona"; dentro de
+   cada categoría los cursos van en el orden en que aparecen en
+   CURSOS_DETALLE, así que los niveles de un mismo curso (Nivel 1,
+   Nivel 2) se ubican uno junto al otro. */
+const CATEGORIAS_CURSO = [
+  { id: "habilidades-humanas",  label: "Habilidades Humanas" },
+  { id: "emprendimiento",       label: "Emprendimiento y Empleabilidad" },
+  { id: "tecnologia",           label: "Tecnología y Programación" },
+  { id: "idiomas",              label: "Idiomas" },
+  { id: "artes-oficios",        label: "Artes y Oficios" },
+  { id: "medio-ambiente",       label: "Medio Ambiente y Agroproductividad" },
+];
+
 /* Detalle de cursos por zona: cantidad de GRUPOS de cada curso
    en cada zona (no "1 = se dicta"). zonasQueOfrecen es el número
    de zonas donde el curso tiene al menos un grupo, tal como lo
    reporta el consolidado. Claves de zona = id de ZONAS. */
 const CURSOS_DETALLE = [
-  { curso: "Bienestar para la persona mayor", "bogota-cundinamarca": 6, "sur-llanos": 5, "antioquia-eje-cafetero": 4, "santanderes-boyaca": 0, "pacifico": 3, "caribe": 0, zonasQueOfrecen: 4 },
-  { curso: "Bisutería", "bogota-cundinamarca": 5, "sur-llanos": 0, "antioquia-eje-cafetero": 1, "santanderes-boyaca": 2, "pacifico": 1, "caribe": 1, zonasQueOfrecen: 5 },
-  { curso: "Business English 1", "bogota-cundinamarca": 1, "sur-llanos": 0, "antioquia-eje-cafetero": 1, "santanderes-boyaca": 0, "pacifico": 1, "caribe": 0, zonasQueOfrecen: 3 },
-  { curso: "Business English 2", "bogota-cundinamarca": 1, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 0, "caribe": 0, zonasQueOfrecen: 1 },
-  { curso: "Comprensión Lectora", "bogota-cundinamarca": 10, "sur-llanos": 8, "antioquia-eje-cafetero": 7, "santanderes-boyaca": 1, "pacifico": 5, "caribe": 5, zonasQueOfrecen: 6 },
-  { curso: "Confección: Manejo de Máquinas de Coser", "bogota-cundinamarca": 2, "sur-llanos": 0, "antioquia-eje-cafetero": 1, "santanderes-boyaca": 0, "pacifico": 2, "caribe": 1, zonasQueOfrecen: 4 },
-  { curso: "Profundización Costos para Emprendedores", "bogota-cundinamarca": 5, "sur-llanos": 5, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 1, "pacifico": 1, "caribe": 1, zonasQueOfrecen: 5 },
-  { curso: "Despertar Emprendedor", "bogota-cundinamarca": 8, "sur-llanos": 14, "antioquia-eje-cafetero": 3, "santanderes-boyaca": 2, "pacifico": 3, "caribe": 2, zonasQueOfrecen: 6 },
-  { curso: "Despertar Humano", "bogota-cundinamarca": 10, "sur-llanos": 16, "antioquia-eje-cafetero": 13, "santanderes-boyaca": 4, "pacifico": 7, "caribe": 4, zonasQueOfrecen: 6 },
-  { curso: "Economía del Hogar", "bogota-cundinamarca": 9, "sur-llanos": 10, "antioquia-eje-cafetero": 8, "santanderes-boyaca": 4, "pacifico": 6, "caribe": 4, zonasQueOfrecen: 6 },
-  { curso: "El ABC del Reciclaje", "bogota-cundinamarca": 5, "sur-llanos": 7, "antioquia-eje-cafetero": 3, "santanderes-boyaca": 1, "pacifico": 2, "caribe": 1, zonasQueOfrecen: 6 },
-  { curso: "English for Kids", "bogota-cundinamarca": 4, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 0, "caribe": 0, zonasQueOfrecen: 1 },
-  { curso: "English for Teens", "bogota-cundinamarca": 4, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 0, "caribe": 0, zonasQueOfrecen: 1 },
-  { curso: "Estrategias para la Búsqueda de Empleo", "bogota-cundinamarca": 7, "sur-llanos": 1, "antioquia-eje-cafetero": 3, "santanderes-boyaca": 0, "pacifico": 3, "caribe": 1, zonasQueOfrecen: 5 },
-  { curso: "Familias Empresarias del Campo", "bogota-cundinamarca": 5, "sur-llanos": 2, "antioquia-eje-cafetero": 1, "santanderes-boyaca": 1, "pacifico": 1, "caribe": 0, zonasQueOfrecen: 5 },
-  { curso: "Floristería 1", "bogota-cundinamarca": 2, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 1, "caribe": 0, zonasQueOfrecen: 2 },
-  { curso: "Francés Nivel 1", "bogota-cundinamarca": 4, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 4, "caribe": 1, zonasQueOfrecen: 3 },
-  { curso: "Francés Nivel 2", "bogota-cundinamarca": 2, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 0, "caribe": 0, zonasQueOfrecen: 1 },
-  { curso: "Inglés Nivel 1", "bogota-cundinamarca": 15, "sur-llanos": 5, "antioquia-eje-cafetero": 5, "santanderes-boyaca": 4, "pacifico": 7, "caribe": 5, zonasQueOfrecen: 6 },
-  { curso: "Inglés Nivel 2", "bogota-cundinamarca": 9, "sur-llanos": 4, "antioquia-eje-cafetero": 4, "santanderes-boyaca": 1, "pacifico": 7, "caribe": 2, zonasQueOfrecen: 6 },
-  { curso: "Italiano Nivel 1", "bogota-cundinamarca": 1, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 1, "pacifico": 3, "caribe": 1, zonasQueOfrecen: 4 },
-  { curso: "Italiano Nivel 2", "bogota-cundinamarca": 2, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 0, "caribe": 0, zonasQueOfrecen: 1 },
-  { curso: "Mi Negocio en Internet", "bogota-cundinamarca": 4, "sur-llanos": 5, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 1, "pacifico": 1, "caribe": 1, zonasQueOfrecen: 5 },
-  { curso: "Modistería (Faldas)", "bogota-cundinamarca": 2, "sur-llanos": 3, "antioquia-eje-cafetero": 2, "santanderes-boyaca": 1, "pacifico": 2, "caribe": 2, zonasQueOfrecen: 6 },
-  { curso: "Muñecas de Trapo", "bogota-cundinamarca": 2, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 0, "caribe": 0, zonasQueOfrecen: 1 },
-  { curso: "Orientación Emprendedora", "bogota-cundinamarca": 7, "sur-llanos": 3, "antioquia-eje-cafetero": 8, "santanderes-boyaca": 1, "pacifico": 4, "caribe": 3, zonasQueOfrecen: 6 },
-  { curso: "Pintura en madera 1", "bogota-cundinamarca": 3, "sur-llanos": 0, "antioquia-eje-cafetero": 1, "santanderes-boyaca": 0, "pacifico": 1, "caribe": 2, zonasQueOfrecen: 4 },
-  { curso: "Portugués Nivel 1", "bogota-cundinamarca": 3, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 3, "caribe": 1, zonasQueOfrecen: 3 },
-  { curso: "Portugués Nivel 2", "bogota-cundinamarca": 1, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 0, "caribe": 0, zonasQueOfrecen: 1 },
-  { curso: "Modistería: Reparación y Modificación de Prendas de Vestir", "bogota-cundinamarca": 2, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 0, "caribe": 0, zonasQueOfrecen: 1 },
-  { curso: "Repostería 1", "bogota-cundinamarca": 3, "sur-llanos": 3, "antioquia-eje-cafetero": 2, "santanderes-boyaca": 0, "pacifico": 4, "caribe": 2, zonasQueOfrecen: 5 },
-  { curso: "Repostería 2", "bogota-cundinamarca": 2, "sur-llanos": 1, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 2, "caribe": 2, zonasQueOfrecen: 4 },
-  { curso: "Salud y Bienestar para Ovinos y Caprinos", "bogota-cundinamarca": 1, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 0, "caribe": 0, zonasQueOfrecen: 1 },
-  { curso: "Sin Límites Virtual", "bogota-cundinamarca": 2, "sur-llanos": 2, "antioquia-eje-cafetero": 1, "santanderes-boyaca": 0, "pacifico": 0, "caribe": 1, zonasQueOfrecen: 4 },
-  { curso: "Sistemas Nivel 1", "bogota-cundinamarca": 13, "sur-llanos": 5, "antioquia-eje-cafetero": 14, "santanderes-boyaca": 1, "pacifico": 8, "caribe": 3, zonasQueOfrecen: 6 },
-  { curso: "Sistemas Nivel 2", "bogota-cundinamarca": 4, "sur-llanos": 3, "antioquia-eje-cafetero": 5, "santanderes-boyaca": 2, "pacifico": 4, "caribe": 1, zonasQueOfrecen: 6 },
-  { curso: "Peinados y Trenzas", "bogota-cundinamarca": 3, "sur-llanos": 1, "antioquia-eje-cafetero": 3, "santanderes-boyaca": 0, "pacifico": 2, "caribe": 0, zonasQueOfrecen: 4 },
+  // --- Habilidades Humanas ---
+  { curso: "Despertar Humano", categoria: "habilidades-humanas", "bogota-cundinamarca": 10, "sur-llanos": 16, "antioquia-eje-cafetero": 13, "santanderes-boyaca": 4, "pacifico": 7, "caribe": 4, zonasQueOfrecen: 6 },
+  { curso: "Comprensión Lectora", categoria: "habilidades-humanas", "bogota-cundinamarca": 10, "sur-llanos": 8, "antioquia-eje-cafetero": 7, "santanderes-boyaca": 1, "pacifico": 5, "caribe": 5, zonasQueOfrecen: 6 },
+  { curso: "Economía del Hogar", categoria: "habilidades-humanas", "bogota-cundinamarca": 9, "sur-llanos": 10, "antioquia-eje-cafetero": 8, "santanderes-boyaca": 4, "pacifico": 6, "caribe": 4, zonasQueOfrecen: 6 },
+  { curso: "Bienestar para la persona mayor", categoria: "habilidades-humanas", "bogota-cundinamarca": 6, "sur-llanos": 5, "antioquia-eje-cafetero": 4, "santanderes-boyaca": 0, "pacifico": 3, "caribe": 0, zonasQueOfrecen: 4 },
+  { curso: "Sin Límites Virtual", categoria: "habilidades-humanas", "bogota-cundinamarca": 2, "sur-llanos": 2, "antioquia-eje-cafetero": 1, "santanderes-boyaca": 0, "pacifico": 0, "caribe": 1, zonasQueOfrecen: 4 },
+
+  // --- Emprendimiento y Empleabilidad ---
+  { curso: "Despertar Emprendedor", categoria: "emprendimiento", "bogota-cundinamarca": 8, "sur-llanos": 14, "antioquia-eje-cafetero": 3, "santanderes-boyaca": 2, "pacifico": 3, "caribe": 2, zonasQueOfrecen: 6 },
+  { curso: "Orientación Emprendedora", categoria: "emprendimiento", "bogota-cundinamarca": 7, "sur-llanos": 3, "antioquia-eje-cafetero": 8, "santanderes-boyaca": 1, "pacifico": 4, "caribe": 3, zonasQueOfrecen: 6 },
+  { curso: "Profundización Costos para Emprendedores", categoria: "emprendimiento", "bogota-cundinamarca": 5, "sur-llanos": 5, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 1, "pacifico": 1, "caribe": 1, zonasQueOfrecen: 5 },
+  { curso: "Mi Negocio en Internet", categoria: "emprendimiento", "bogota-cundinamarca": 4, "sur-llanos": 5, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 1, "pacifico": 1, "caribe": 1, zonasQueOfrecen: 5 },
+  { curso: "Estrategias para la Búsqueda de Empleo", categoria: "emprendimiento", "bogota-cundinamarca": 7, "sur-llanos": 1, "antioquia-eje-cafetero": 3, "santanderes-boyaca": 0, "pacifico": 3, "caribe": 1, zonasQueOfrecen: 5 },
+  { curso: "Familias Empresarias del Campo", categoria: "emprendimiento", "bogota-cundinamarca": 5, "sur-llanos": 2, "antioquia-eje-cafetero": 1, "santanderes-boyaca": 1, "pacifico": 1, "caribe": 0, zonasQueOfrecen: 5 },
+
+  // --- Tecnología y Programación ---
+  { curso: "Sistemas Nivel 1", categoria: "tecnologia", "bogota-cundinamarca": 13, "sur-llanos": 5, "antioquia-eje-cafetero": 14, "santanderes-boyaca": 1, "pacifico": 8, "caribe": 3, zonasQueOfrecen: 6 },
+  { curso: "Sistemas Nivel 2", categoria: "tecnologia", "bogota-cundinamarca": 4, "sur-llanos": 3, "antioquia-eje-cafetero": 5, "santanderes-boyaca": 2, "pacifico": 4, "caribe": 1, zonasQueOfrecen: 6 },
+
+  // --- Idiomas ---
+  { curso: "Inglés Nivel 1", categoria: "idiomas", "bogota-cundinamarca": 15, "sur-llanos": 5, "antioquia-eje-cafetero": 5, "santanderes-boyaca": 4, "pacifico": 7, "caribe": 5, zonasQueOfrecen: 6 },
+  { curso: "Inglés Nivel 2", categoria: "idiomas", "bogota-cundinamarca": 9, "sur-llanos": 4, "antioquia-eje-cafetero": 4, "santanderes-boyaca": 1, "pacifico": 7, "caribe": 2, zonasQueOfrecen: 6 },
+  { curso: "Business English 1", categoria: "idiomas", "bogota-cundinamarca": 1, "sur-llanos": 0, "antioquia-eje-cafetero": 1, "santanderes-boyaca": 0, "pacifico": 1, "caribe": 0, zonasQueOfrecen: 3 },
+  { curso: "Business English 2", categoria: "idiomas", "bogota-cundinamarca": 1, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 0, "caribe": 0, zonasQueOfrecen: 1 },
+  { curso: "English for Kids", categoria: "idiomas", "bogota-cundinamarca": 4, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 0, "caribe": 0, zonasQueOfrecen: 1 },
+  { curso: "English for Teens", categoria: "idiomas", "bogota-cundinamarca": 4, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 0, "caribe": 0, zonasQueOfrecen: 1 },
+  { curso: "Francés Nivel 1", categoria: "idiomas", "bogota-cundinamarca": 4, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 4, "caribe": 1, zonasQueOfrecen: 3 },
+  { curso: "Francés Nivel 2", categoria: "idiomas", "bogota-cundinamarca": 2, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 0, "caribe": 0, zonasQueOfrecen: 1 },
+  { curso: "Italiano Nivel 1", categoria: "idiomas", "bogota-cundinamarca": 1, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 1, "pacifico": 3, "caribe": 1, zonasQueOfrecen: 4 },
+  { curso: "Italiano Nivel 2", categoria: "idiomas", "bogota-cundinamarca": 2, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 0, "caribe": 0, zonasQueOfrecen: 1 },
+  { curso: "Portugués Nivel 1", categoria: "idiomas", "bogota-cundinamarca": 3, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 3, "caribe": 1, zonasQueOfrecen: 3 },
+  { curso: "Portugués Nivel 2", categoria: "idiomas", "bogota-cundinamarca": 1, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 0, "caribe": 0, zonasQueOfrecen: 1 },
+
+  // --- Artes y Oficios ---
+  { curso: "Bisutería", categoria: "artes-oficios", "bogota-cundinamarca": 5, "sur-llanos": 0, "antioquia-eje-cafetero": 1, "santanderes-boyaca": 2, "pacifico": 1, "caribe": 1, zonasQueOfrecen: 5 },
+  { curso: "Confección: Manejo de Máquinas de Coser", categoria: "artes-oficios", "bogota-cundinamarca": 2, "sur-llanos": 0, "antioquia-eje-cafetero": 1, "santanderes-boyaca": 0, "pacifico": 2, "caribe": 1, zonasQueOfrecen: 4 },
+  { curso: "Modistería (Faldas)", categoria: "artes-oficios", "bogota-cundinamarca": 2, "sur-llanos": 3, "antioquia-eje-cafetero": 2, "santanderes-boyaca": 1, "pacifico": 2, "caribe": 2, zonasQueOfrecen: 6 },
+  { curso: "Modistería: Reparación y Modificación de Prendas de Vestir", categoria: "artes-oficios", "bogota-cundinamarca": 2, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 0, "caribe": 0, zonasQueOfrecen: 1 },
+  { curso: "Muñecas de Trapo", categoria: "artes-oficios", "bogota-cundinamarca": 2, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 0, "caribe": 0, zonasQueOfrecen: 1 },
+  { curso: "Pintura en madera 1", categoria: "artes-oficios", "bogota-cundinamarca": 3, "sur-llanos": 0, "antioquia-eje-cafetero": 1, "santanderes-boyaca": 0, "pacifico": 1, "caribe": 2, zonasQueOfrecen: 4 },
+  { curso: "Peinados y Trenzas", categoria: "artes-oficios", "bogota-cundinamarca": 3, "sur-llanos": 1, "antioquia-eje-cafetero": 3, "santanderes-boyaca": 0, "pacifico": 2, "caribe": 0, zonasQueOfrecen: 4 },
+  { curso: "Floristería 1", categoria: "artes-oficios", "bogota-cundinamarca": 2, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 1, "caribe": 0, zonasQueOfrecen: 2 },
+  { curso: "Repostería 1", categoria: "artes-oficios", "bogota-cundinamarca": 3, "sur-llanos": 3, "antioquia-eje-cafetero": 2, "santanderes-boyaca": 0, "pacifico": 4, "caribe": 2, zonasQueOfrecen: 5 },
+  { curso: "Repostería 2", categoria: "artes-oficios", "bogota-cundinamarca": 2, "sur-llanos": 1, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 2, "caribe": 2, zonasQueOfrecen: 4 },
+
+  // --- Medio Ambiente y Agroproductividad ---
+  { curso: "El ABC del Reciclaje", categoria: "medio-ambiente", "bogota-cundinamarca": 5, "sur-llanos": 7, "antioquia-eje-cafetero": 3, "santanderes-boyaca": 1, "pacifico": 2, "caribe": 1, zonasQueOfrecen: 6 },
+  { curso: "Salud y Bienestar para Ovinos y Caprinos", categoria: "medio-ambiente", "bogota-cundinamarca": 1, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 0, "caribe": 0, zonasQueOfrecen: 1 },
 ];
 
 /* Totales generales (tal como aparecen en el reporte más
