@@ -1,6 +1,7 @@
 /* ============================================================
    DATOS DEL INFORME — Cuerpo académico Convocatoria 32
-   Fuente: reporte regional de resultados (corte 25/07/2026).
+   Fuente: reporte regional de resultados (corte 25/07/2026) y
+   consolidado de cursos/informadores (corte 27/07/2026).
    Estructura pensada para agregar zonas o departamentos sin
    tocar el resto del código (informe.js consume este archivo).
    ============================================================ */
@@ -30,9 +31,10 @@ const ROLES = [
 ];
 
 /* Cada zona agrupa: departamentos que la componen, personal por
-   rol (con total) y oferta académica (cursos, grupos, cupos).
-   Para agregar un departamento nuevo a una zona, solo hay que
-   añadirlo al arreglo "departamentos" correspondiente. */
+   rol (con total), oferta académica (cursos, grupos, cupos),
+   datos de comunidad (iglesias, creyentes) e informadores
+   inscritos al proyecto. Para agregar un departamento nuevo a
+   una zona, solo hay que añadirlo al arreglo "departamentos". */
 const ZONAS = [
   {
     id: "bogota-cundinamarca",
@@ -45,20 +47,9 @@ const ZONAS = [
       apoyoPedagogico: 0, coordinadorTutores: 0, apoyoTutores: 0, responsableCurso: 0,
       total: 489,
     },
-    oferta: { cursos: 38, grupos: 169, cupos: 8600 },
+    oferta: { cursos: 37, grupos: 169, cupos: 8600 },
     comunidad: { iglesias: 97, creyentes: 38800 },
-    cursosOfertados: [
-      "Bienestar para la Persona Mayor", "Bisutería", "Business English 1", "Business English 2",
-      "Comprensión Lectora", "Confección: Manejo de Máquinas", "Costos para Emprendedores/Contabilidad",
-      "Despertar Emprendedor", "Despertar Emprendedor Nivel 2", "Despertar Humano", "Economía del Hogar",
-      "El ABC del Reciclaje", "English for Kids", "English for Teens", "Estrategias para la Búsqueda de Empleo",
-      "Familias Empresarias del Campo", "Floristería 1", "Francés 1", "Francés 2", "Inglés 1", "Inglés 2",
-      "Italiano 1", "Italiano 2", "Mi Negocio en Internet 1", "Mi Negocio en Internet 2",
-      "Modistería 1 (Faldas)", "Muñecas de Trapo", "Orientación Emprendedora", "Pintura en madera 1",
-      "Portugués 1", "Portugués 2", "Reparación de prendas de vestir", "Repostería 1", "Repostería 2",
-      "Salud y Bienestar en Ovinos y Caprinos", "Sin Límites Virtual", "Sistemas (DCO)", "Sistemas 1",
-      "Sistemas 2", "Trenzas y Peinados",
-    ],
+    informadores: 838,
   },
   {
     id: "caribe",
@@ -73,14 +64,7 @@ const ZONAS = [
     },
     oferta: { cursos: 23, grupos: 47, cupos: 2400 },
     comunidad: { iglesias: 63, creyentes: 25200 },
-    cursosOfertados: [
-      "Bisutería", "Comprensión Lectora", "Confección: Manejo de Máquinas",
-      "Costos para Emprendedores/Contabilidad", "Despertar Emprendedor", "Despertar Humano",
-      "Economía del Hogar", "El ABC del Reciclaje", "Estrategias para la Búsqueda de Empleo",
-      "Francés 1", "Inglés 1", "Inglés 2", "Italiano 1", "Mi Negocio en Internet 1",
-      "Modistería 1 (Faldas)", "Orientación Emprendedora", "Pintura en madera 1", "Portugués 1",
-      "Repostería 1", "Repostería 2", "Sin Límites Virtual", "Sistemas 1", "Sistemas 2",
-    ],
+    informadores: 355,
   },
   {
     id: "antioquia-eje-cafetero",
@@ -95,14 +79,7 @@ const ZONAS = [
     },
     oferta: { cursos: 26, grupos: 95, cupos: 4750 },
     comunidad: { iglesias: 111, creyentes: 44400 },
-    cursosOfertados: [
-      "Bienestar para la Persona Mayor", "Bisutería", "Bonsái en Alambre y Pedrería", "Business English 1",
-      "Comprensión Lectora", "Confección: Manejo de Máquinas", "Despertar Emprendedor", "Despertar Humano",
-      "Economía del Hogar", "El ABC del Reciclaje", "English Leasing a Conversación",
-      "Estrategias para la Búsqueda de Empleo", "Familias Empresarias del Campo", "Huertas Caseras",
-      "Inglés 1", "Inglés 2", "Modistería 1 (Faldas)", "Orientación Emprendedora", "Pintura en madera 1",
-      "Repostería 1", "Sin Límites Virtual", "Sistemas 1", "Sistemas 2", "Trenzas y Peinados",
-    ],
+    informadores: 935,
   },
   {
     id: "pacifico",
@@ -117,15 +94,7 @@ const ZONAS = [
     },
     oferta: { cursos: 27, grupos: 88, cupos: 4550 },
     comunidad: { iglesias: 131, creyentes: 52400 },
-    cursosOfertados: [
-      "Bienestar para la Persona Mayor", "Bisutería", "Business English 1", "Comprensión Lectora",
-      "Confección: Manejo de Máquinas", "Costos para Emprendedores/Contabilidad", "Despertar Emprendedor",
-      "Despertar Humano", "Economía del Hogar", "El ABC del Reciclaje",
-      "Estrategias para la Búsqueda de Empleo", "Familias Empresarias del Campo", "Floristería 1",
-      "Francés 1", "Inglés 1", "Inglés 2", "Italiano 1", "Mi Negocio en Internet 1",
-      "Modistería 1 (Faldas)", "Orientación Emprendedora", "Pintura en madera 1", "Portugués 1",
-      "Repostería 1", "Repostería 2", "Sistemas 1", "Sistemas 2", "Trenzas y Peinados",
-    ],
+    informadores: 777,
   },
   {
     id: "sur-llanos",
@@ -138,15 +107,9 @@ const ZONAS = [
       apoyoPedagogico: 4, coordinadorTutores: 5, apoyoTutores: 4, responsableCurso: 0,
       total: 318,
     },
-    oferta: { cursos: 21, grupos: 105, cupos: 5250 },
+    oferta: { cursos: 20, grupos: 103, cupos: 5250 },
     comunidad: { iglesias: 113, creyentes: 45200 },
-    cursosOfertados: [
-      "Bienestar para la Persona Mayor", "Comprensión Lectora", "Costos para Emprendedores/Contabilidad",
-      "Despertar Emprendedor", "Despertar Humano", "Economía del Hogar", "El ABC del Reciclaje",
-      "Estrategias para la Búsqueda de Empleo", "Familias Empresarias del Campo", "Inglés 1", "Inglés 2",
-      "Mi Negocio en Internet 1", "Modistería 1 (Faldas)", "Orientación Emprendedora", "Repostería 1",
-      "Repostería 2", "Sin Límites Virtual", "Sistemas 1", "Sistemas 2", "Trenzas y Peinados",
-    ],
+    informadores: 1113,
   },
   {
     id: "santanderes-boyaca",
@@ -161,17 +124,61 @@ const ZONAS = [
     },
     oferta: { cursos: 16, grupos: 28, cupos: 1460 },
     comunidad: { iglesias: 88, creyentes: 30800 },
-    cursosOfertados: [
-      "Bisutería", "Comprensión Lectora", "Costos para Emprendedores/Contabilidad", "Despertar Emprendedor",
-      "Despertar Humano", "Economía del Hogar", "El ABC del Reciclaje", "Familias Empresarias del Campo",
-      "Inglés 1", "Inglés 2", "Italiano 1", "Mi Negocio en Internet 1", "Modistería 1 (Faldas)",
-      "Orientación Emprendedora", "Sistemas 1", "Sistemas 2",
-    ],
+    informadores: 445,
   },
 ];
 
-/* Totales generales (tal como aparecen en el reporte original;
-   se recalculan además en informe.js como verificación). */
+/* Informadores inscritos sin departamento asignado (no se
+   reparten a ninguna zona; se suman aparte al total nacional). */
+const INFORMADORES_SIN_ZONA = 238;
+
+/* Detalle de cursos por zona: cantidad de GRUPOS de cada curso
+   en cada zona (no "1 = se dicta"). zonasQueOfrecen es el número
+   de zonas donde el curso tiene al menos un grupo, tal como lo
+   reporta el consolidado. Claves de zona = id de ZONAS. */
+const CURSOS_DETALLE = [
+  { curso: "Bienestar para la persona mayor", "bogota-cundinamarca": 6, "sur-llanos": 5, "antioquia-eje-cafetero": 4, "santanderes-boyaca": 0, "pacifico": 3, "caribe": 0, zonasQueOfrecen: 4 },
+  { curso: "Bisutería", "bogota-cundinamarca": 5, "sur-llanos": 0, "antioquia-eje-cafetero": 1, "santanderes-boyaca": 2, "pacifico": 1, "caribe": 1, zonasQueOfrecen: 5 },
+  { curso: "Business English 1", "bogota-cundinamarca": 1, "sur-llanos": 0, "antioquia-eje-cafetero": 1, "santanderes-boyaca": 0, "pacifico": 1, "caribe": 0, zonasQueOfrecen: 3 },
+  { curso: "Business English 2", "bogota-cundinamarca": 1, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 0, "caribe": 0, zonasQueOfrecen: 1 },
+  { curso: "Comprensión Lectora", "bogota-cundinamarca": 10, "sur-llanos": 8, "antioquia-eje-cafetero": 7, "santanderes-boyaca": 1, "pacifico": 5, "caribe": 5, zonasQueOfrecen: 6 },
+  { curso: "Confección: Manejo de Máquinas de Coser", "bogota-cundinamarca": 2, "sur-llanos": 0, "antioquia-eje-cafetero": 1, "santanderes-boyaca": 0, "pacifico": 2, "caribe": 1, zonasQueOfrecen: 4 },
+  { curso: "Profundización Costos para Emprendedores", "bogota-cundinamarca": 5, "sur-llanos": 5, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 1, "pacifico": 1, "caribe": 1, zonasQueOfrecen: 5 },
+  { curso: "Despertar Emprendedor", "bogota-cundinamarca": 8, "sur-llanos": 14, "antioquia-eje-cafetero": 3, "santanderes-boyaca": 2, "pacifico": 3, "caribe": 2, zonasQueOfrecen: 6 },
+  { curso: "Despertar Humano", "bogota-cundinamarca": 10, "sur-llanos": 16, "antioquia-eje-cafetero": 13, "santanderes-boyaca": 4, "pacifico": 7, "caribe": 4, zonasQueOfrecen: 6 },
+  { curso: "Economía del Hogar", "bogota-cundinamarca": 9, "sur-llanos": 10, "antioquia-eje-cafetero": 8, "santanderes-boyaca": 4, "pacifico": 6, "caribe": 4, zonasQueOfrecen: 6 },
+  { curso: "El ABC del Reciclaje", "bogota-cundinamarca": 5, "sur-llanos": 7, "antioquia-eje-cafetero": 3, "santanderes-boyaca": 1, "pacifico": 2, "caribe": 1, zonasQueOfrecen: 6 },
+  { curso: "English for Kids", "bogota-cundinamarca": 4, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 0, "caribe": 0, zonasQueOfrecen: 1 },
+  { curso: "English for Teens", "bogota-cundinamarca": 4, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 0, "caribe": 0, zonasQueOfrecen: 1 },
+  { curso: "Estrategias para la Búsqueda de Empleo", "bogota-cundinamarca": 7, "sur-llanos": 1, "antioquia-eje-cafetero": 3, "santanderes-boyaca": 0, "pacifico": 3, "caribe": 1, zonasQueOfrecen: 5 },
+  { curso: "Familias Empresarias del Campo", "bogota-cundinamarca": 5, "sur-llanos": 2, "antioquia-eje-cafetero": 1, "santanderes-boyaca": 1, "pacifico": 1, "caribe": 0, zonasQueOfrecen: 5 },
+  { curso: "Floristería 1", "bogota-cundinamarca": 2, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 1, "caribe": 0, zonasQueOfrecen: 2 },
+  { curso: "Francés Nivel 1", "bogota-cundinamarca": 4, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 4, "caribe": 1, zonasQueOfrecen: 3 },
+  { curso: "Francés Nivel 2", "bogota-cundinamarca": 2, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 0, "caribe": 0, zonasQueOfrecen: 1 },
+  { curso: "Inglés Nivel 1", "bogota-cundinamarca": 15, "sur-llanos": 5, "antioquia-eje-cafetero": 5, "santanderes-boyaca": 4, "pacifico": 7, "caribe": 5, zonasQueOfrecen: 6 },
+  { curso: "Inglés Nivel 2", "bogota-cundinamarca": 9, "sur-llanos": 4, "antioquia-eje-cafetero": 4, "santanderes-boyaca": 1, "pacifico": 7, "caribe": 2, zonasQueOfrecen: 6 },
+  { curso: "Italiano Nivel 1", "bogota-cundinamarca": 1, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 1, "pacifico": 3, "caribe": 1, zonasQueOfrecen: 4 },
+  { curso: "Italiano Nivel 2", "bogota-cundinamarca": 2, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 0, "caribe": 0, zonasQueOfrecen: 1 },
+  { curso: "Mi Negocio en Internet", "bogota-cundinamarca": 4, "sur-llanos": 5, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 1, "pacifico": 1, "caribe": 1, zonasQueOfrecen: 5 },
+  { curso: "Modistería (Faldas)", "bogota-cundinamarca": 2, "sur-llanos": 3, "antioquia-eje-cafetero": 2, "santanderes-boyaca": 1, "pacifico": 2, "caribe": 2, zonasQueOfrecen: 6 },
+  { curso: "Muñecas de Trapo", "bogota-cundinamarca": 2, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 0, "caribe": 0, zonasQueOfrecen: 1 },
+  { curso: "Orientación Emprendedora", "bogota-cundinamarca": 7, "sur-llanos": 3, "antioquia-eje-cafetero": 8, "santanderes-boyaca": 1, "pacifico": 4, "caribe": 3, zonasQueOfrecen: 6 },
+  { curso: "Pintura en madera 1", "bogota-cundinamarca": 3, "sur-llanos": 0, "antioquia-eje-cafetero": 1, "santanderes-boyaca": 0, "pacifico": 1, "caribe": 2, zonasQueOfrecen: 4 },
+  { curso: "Portugués Nivel 1", "bogota-cundinamarca": 3, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 3, "caribe": 1, zonasQueOfrecen: 3 },
+  { curso: "Portugués Nivel 2", "bogota-cundinamarca": 1, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 0, "caribe": 0, zonasQueOfrecen: 1 },
+  { curso: "Modistería: Reparación y Modificación de Prendas de Vestir", "bogota-cundinamarca": 2, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 0, "caribe": 0, zonasQueOfrecen: 1 },
+  { curso: "Repostería 1", "bogota-cundinamarca": 3, "sur-llanos": 3, "antioquia-eje-cafetero": 2, "santanderes-boyaca": 0, "pacifico": 4, "caribe": 2, zonasQueOfrecen: 5 },
+  { curso: "Repostería 2", "bogota-cundinamarca": 2, "sur-llanos": 1, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 2, "caribe": 2, zonasQueOfrecen: 4 },
+  { curso: "Salud y Bienestar para Ovinos y Caprinos", "bogota-cundinamarca": 1, "sur-llanos": 0, "antioquia-eje-cafetero": 0, "santanderes-boyaca": 0, "pacifico": 0, "caribe": 0, zonasQueOfrecen: 1 },
+  { curso: "Sin Límites Virtual", "bogota-cundinamarca": 2, "sur-llanos": 2, "antioquia-eje-cafetero": 1, "santanderes-boyaca": 0, "pacifico": 0, "caribe": 1, zonasQueOfrecen: 4 },
+  { curso: "Sistemas Nivel 1", "bogota-cundinamarca": 13, "sur-llanos": 5, "antioquia-eje-cafetero": 14, "santanderes-boyaca": 1, "pacifico": 8, "caribe": 3, zonasQueOfrecen: 6 },
+  { curso: "Sistemas Nivel 2", "bogota-cundinamarca": 4, "sur-llanos": 3, "antioquia-eje-cafetero": 5, "santanderes-boyaca": 2, "pacifico": 4, "caribe": 1, zonasQueOfrecen: 6 },
+  { curso: "Peinados y Trenzas", "bogota-cundinamarca": 3, "sur-llanos": 1, "antioquia-eje-cafetero": 3, "santanderes-boyaca": 0, "pacifico": 2, "caribe": 0, zonasQueOfrecen: 4 },
+];
+
+/* Totales generales (tal como aparecen en el reporte más
+   reciente; se recalculan además en informe.js como
+   verificación cruzada). */
 const TOTALES = {
   personal: {
     profesores: 857, tutores: 737, administradores: 193, coordinadora: 2,
@@ -179,6 +186,7 @@ const TOTALES = {
     apoyoPedagogico: 9, coordinadorTutores: 7, apoyoTutores: 5, responsableCurso: 1,
     total: 1840,
   },
-  oferta: { cursos: 151, grupos: 532, cupos: 27010 },
+  oferta: { cursos: 149, grupos: 530, cupos: 27010 },
   comunidad: { iglesias: 603, creyentes: 236800 },
+  informadores: 4701,
 };

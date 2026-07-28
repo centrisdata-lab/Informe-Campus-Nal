@@ -11,9 +11,6 @@
   const fmt = new Intl.NumberFormat("es-CO");
   const pct = (parte, total) => (total ? ((parte / total) * 100) : 0);
 
-  // Oculto hasta tener el listado de cursos depurado; cambiar a true para reactivarlo.
-  const MOSTRAR_CURSOS_OFERTADOS = false;
-
   /* ---------------------------------------------------------
      1. TARJETAS KPI
      --------------------------------------------------------- */
@@ -55,6 +52,13 @@
         delta: `50 cupos por grupo`,
         bar: 100,
       },
+      {
+        icon: "📣",
+        label: "Informadores inscritos",
+        value: fmt.format(TOTALES.informadores),
+        delta: `${fmt.format(INFORMADORES_SIN_ZONA)} sin departamento asignado`,
+        bar: 100,
+      },
     ];
 
     cont.innerHTML = kpis.map((k) => `
@@ -88,6 +92,7 @@
           <th>Cupos</th>
           <th>Iglesias</th>
           <th>Creyentes</th>
+          <th>Informadores</th>
           <th>% del total nacional</th>
         </tr>
       </thead>`;
@@ -105,6 +110,7 @@
           <td>${fmt.format(z.oferta.cupos)}</td>
           <td>${fmt.format(z.comunidad.iglesias)}</td>
           <td>${fmt.format(z.comunidad.creyentes)}</td>
+          <td>${fmt.format(z.informadores)}</td>
           <td class="cell-total">${share.toFixed(1)}%</td>
         </tr>
       `;
@@ -119,6 +125,7 @@
         <td>${fmt.format(TOTALES.oferta.cupos)}</td>
         <td>${fmt.format(TOTALES.comunidad.iglesias)}</td>
         <td>${fmt.format(TOTALES.comunidad.creyentes)}</td>
+        <td>${fmt.format(TOTALES.informadores)}</td>
         <td class="cell-total">100%</td>
       </tr>
     `;
@@ -140,6 +147,9 @@
         .join("");
 
       const sharePersonal = pct(z.personal.total, TOTALES.personal.total);
+      const cursosDeZona = CURSOS_DETALLE
+        .filter((c) => c[z.id] > 0)
+        .sort((a, b) => b[z.id] - a[z.id]);
 
       return `
         <article class="zone-card" style="--zona-color:${z.color}">
@@ -167,6 +177,10 @@
               <div class="zone-stat">
                 <div class="zone-stat__value">${fmt.format(z.comunidad.creyentes)}</div>
                 <div class="zone-stat__label">Creyentes</div>
+              </div>
+              <div class="zone-stat">
+                <div class="zone-stat__value">${fmt.format(z.informadores)}</div>
+                <div class="zone-stat__label">Informadores</div>
               </div>
               <div class="zone-stat">
                 <div class="zone-stat__value">${sharePersonal.toFixed(1)}%</div>
@@ -208,11 +222,15 @@
                   </div>
                 </div>
 
-                ${MOSTRAR_CURSOS_OFERTADOS && z.cursosOfertados && z.cursosOfertados.length ? `
+                ${cursosDeZona.length ? `
                 <div class="zone-card__cursos">
-                  <h4 class="zone-card__cursos-title">Cursos ofertados en la zona (${z.cursosOfertados.length})</h4>
+                  <h4 class="zone-card__cursos-title">
+                    Cursos con grupos en la zona (${cursosDeZona.length})
+                  </h4>
                   <div class="zone-card__cursos-list">
-                    ${z.cursosOfertados.map((c) => `<span class="curso-chip">${c}</span>`).join("")}
+                    ${cursosDeZona.map((c) => `
+                      <span class="curso-chip">${c.curso}<b>${fmt.format(c[z.id])}</b></span>
+                    `).join("")}
                   </div>
                 </div>
                 ` : ""}
@@ -271,12 +289,59 @@
   }
 
   /* ---------------------------------------------------------
+     5. TABLA DE CURSOS POR ZONA
+     Filas = cursos, columnas = zonas, celdas = grupos abiertos
+     de ese curso en esa zona. Ordenada por total de grupos.
+     --------------------------------------------------------- */
+  function renderTablaCursos() {
+    const table = document.getElementById("tabla-cursos");
+    if (!table) return;
+
+    const totalGruposCurso = (c) => ZONAS.reduce((suma, z) => suma + (c[z.id] || 0), 0);
+
+    const cursosOrdenados = [...CURSOS_DETALLE]
+      .sort((a, b) => totalGruposCurso(b) - totalGruposCurso(a));
+
+    const thead = `
+      <thead>
+        <tr>
+          <th>Curso</th>
+          ${ZONAS.map((z) => `<th>${z.nombre}</th>`).join("")}
+          <th>Total grupos</th>
+        </tr>
+      </thead>`;
+
+    const filas = cursosOrdenados.map((c) => `
+      <tr>
+        <td>${c.curso}</td>
+        ${ZONAS.map((z) => `<td>${c[z.id] ? fmt.format(c[z.id]) : "—"}</td>`).join("")}
+        <td class="cell-total">${fmt.format(totalGruposCurso(c))}</td>
+      </tr>
+    `).join("");
+
+    const totalesPorZona = ZONAS.map((z) =>
+      CURSOS_DETALLE.reduce((suma, c) => suma + (c[z.id] || 0), 0)
+    );
+
+    const filaTotal = `
+      <tr class="fila-total">
+        <td>Total de grupos</td>
+        ${totalesPorZona.map((t) => `<td>${fmt.format(t)}</td>`).join("")}
+        <td class="cell-total">${fmt.format(totalesPorZona.reduce((a, b) => a + b, 0))}</td>
+      </tr>
+    `;
+
+    table.innerHTML = thead + `<tbody>${filas}${filaTotal}</tbody>`;
+  }
+
+  /* ---------------------------------------------------------
      Init
      --------------------------------------------------------- */
   document.addEventListener("DOMContentLoaded", () => {
     renderKpis();
     renderComparativoZonas();
     renderZonas();
+    renderTablaCursos();
     renderTablaConsolidada();
   });
 })();
