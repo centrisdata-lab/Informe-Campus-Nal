@@ -48,17 +48,24 @@
       </section>
 
       <!-- ======= COMPARATIVO POR ZONA (TABLA RESUMEN) ======= -->
-      <section class="section" id="comparativo" aria-labelledby="comparativo-titulo">
-        <div class="section__head">
-          <h2 id="comparativo-titulo">Comparativo por zona</h2>
-          <p>Cuerpo académico y oferta académica (cursos, grupos y cupos) de cada zona, con su participación sobre el total nacional.</p>
-        </div>
+      <section class="section panel" id="comparativo" aria-labelledby="comparativo-titulo">
+        <button class="panel__head" type="button" data-panel-toggle aria-expanded="false" aria-controls="panel-comparativo">
+          <div class="panel__titles">
+            <h2 id="comparativo-titulo">Comparativo por zona</h2>
+            <p>Cuerpo académico y oferta académica (cursos, grupos y cupos) de cada zona, con su participación sobre el total nacional.</p>
+          </div>
+          <span class="panel__toggle" aria-hidden="true">+</span>
+        </button>
 
-        <div class="card table-card">
-          <div class="table-scroll">
-            <table class="data-table" id="tabla-comparativo-zonas">
-              <!-- Generada por js/informe.js -->
-            </table>
+        <div class="panel__body" id="panel-comparativo">
+          <div class="panel__body-inner">
+            <div class="card table-card">
+              <div class="table-scroll">
+                <table class="data-table" id="tabla-comparativo-zonas">
+                  <!-- Generada por js/informe.js -->
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -76,33 +83,47 @@
       </section>
 
       <!-- ======= CURSOS POR ZONA ======= -->
-      <section class="section" id="cursos" aria-labelledby="cursos-titulo">
-        <div class="section__head">
-          <h2 id="cursos-titulo">Cursos por zona</h2>
-          <p>Grupos abiertos de cada curso en cada zona. Un mismo curso puede tener varios grupos por horario.</p>
-        </div>
+      <section class="section panel" id="cursos" aria-labelledby="cursos-titulo">
+        <button class="panel__head" type="button" data-panel-toggle aria-expanded="false" aria-controls="panel-cursos">
+          <div class="panel__titles">
+            <h2 id="cursos-titulo">Cursos por zona</h2>
+            <p>Grupos abiertos de cada curso en cada zona. Un mismo curso puede tener varios grupos por horario.</p>
+          </div>
+          <span class="panel__toggle" aria-hidden="true">+</span>
+        </button>
 
-        <div class="card table-card">
-          <div class="table-scroll">
-            <table class="data-table" id="tabla-cursos">
-              <!-- Generada por js/informe.js -->
-            </table>
+        <div class="panel__body" id="panel-cursos">
+          <div class="panel__body-inner">
+            <div class="card table-card">
+              <div class="table-scroll">
+                <table class="data-table" id="tabla-cursos">
+                  <!-- Generada por js/informe.js -->
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       <!-- ======= TABLA CONSOLIDADA ======= -->
-      <section class="section" id="consolidado" aria-labelledby="consolidado-titulo">
-        <div class="section__head">
-          <h2 id="consolidado-titulo">Tabla consolidada de cuerpo académico</h2>
-          <p>Totales por rol para cada zona, tal como se registran en el reporte regional.</p>
-        </div>
+      <section class="section panel" id="consolidado" aria-labelledby="consolidado-titulo">
+        <button class="panel__head" type="button" data-panel-toggle aria-expanded="false" aria-controls="panel-consolidado">
+          <div class="panel__titles">
+            <h2 id="consolidado-titulo">Tabla consolidada de cuerpo académico</h2>
+            <p>Totales por rol para cada zona, tal como se registran en el reporte regional.</p>
+          </div>
+          <span class="panel__toggle" aria-hidden="true">+</span>
+        </button>
 
-        <div class="card table-card">
-          <div class="table-scroll">
-            <table class="data-table" id="tabla-consolidada">
-              <!-- Generada por js/informe.js -->
-            </table>
+        <div class="panel__body" id="panel-consolidado">
+          <div class="panel__body-inner">
+            <div class="card table-card">
+              <div class="table-scroll">
+                <table class="data-table" id="tabla-consolidada">
+                  <!-- Generada por js/informe.js -->
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </section>

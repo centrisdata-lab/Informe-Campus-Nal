@@ -335,6 +335,20 @@
   }
 
   /* ---------------------------------------------------------
+     6. SECCIONES DESPLEGABLES
+     Las tablas inician colapsadas; el título actúa como botón.
+     --------------------------------------------------------- */
+  function initPaneles() {
+    document.querySelectorAll("[data-panel-toggle]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const panel = btn.closest(".panel");
+        const abierto = panel.classList.toggle("is-open");
+        btn.setAttribute("aria-expanded", String(abierto));
+      });
+    });
+  }
+
+  /* ---------------------------------------------------------
      Init
      --------------------------------------------------------- */
   document.addEventListener("DOMContentLoaded", () => {
@@ -343,5 +357,6 @@
     renderZonas();
     renderTablaCursos();
     renderTablaConsolidada();
+    initPaneles();
   });
 })();
