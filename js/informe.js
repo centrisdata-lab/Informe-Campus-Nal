@@ -54,7 +54,7 @@
       },
       {
         icon: "📣",
-        label: "Informadores inscritos",
+        label: "Informadores inscritos en proyecto",
         value: fmt.format(TOTALES.informadores),
         delta: `${fmt.format(INFORMADORES_SIN_ZONA)} sin departamento asignado`,
         bar: 100,
