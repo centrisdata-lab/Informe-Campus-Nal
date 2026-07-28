@@ -106,6 +106,8 @@
           <th>Iglesias</th>
           <th>Creyentes</th>
           <th>Informadores</th>
+          <th>Coordinadores zonales</th>
+          <th>Enlace Campus Delegación</th>
           <th>% de los cupos nacionales</th>
         </tr>
       </thead>`;
@@ -124,6 +126,8 @@
           <td>${fmt.format(z.comunidad.iglesias)}</td>
           <td>${fmt.format(z.comunidad.creyentes)}</td>
           <td>${fmt.format(z.informadores)}</td>
+          <td>${fmt.format(z.coordinadoresZonales)}</td>
+          <td>${fmt.format(z.enlaceDelegacion)}</td>
           <td class="cell-total">${share.toFixed(1)}%</td>
         </tr>
       `;
@@ -139,6 +143,8 @@
         <td>${fmt.format(TOTALES.comunidad.iglesias)}</td>
         <td>${fmt.format(TOTALES.comunidad.creyentes)}</td>
         <td>${fmt.format(TOTALES.informadores)}</td>
+        <td>${fmt.format(TOTALES.coordinadoresZonales)}</td>
+        <td>${fmt.format(TOTALES.enlaceDelegacion)}</td>
         <td class="cell-total">100%</td>
       </tr>
     `;
@@ -232,6 +238,14 @@
                   <div class="zone-oferta-item">
                     <span class="zone-oferta-item__label">Cupos</span>
                     <span class="zone-oferta-item__value">${fmt.format(z.oferta.cupos)}</span>
+                  </div>
+                  <div class="zone-oferta-item">
+                    <span class="zone-oferta-item__label">Coordinadores zonales</span>
+                    <span class="zone-oferta-item__value">${fmt.format(z.coordinadoresZonales)}</span>
+                  </div>
+                  <div class="zone-oferta-item">
+                    <span class="zone-oferta-item__label">Enlace Campus Delegación</span>
+                    <span class="zone-oferta-item__value">${fmt.format(z.enlaceDelegacion)}</span>
                   </div>
                 </div>
 

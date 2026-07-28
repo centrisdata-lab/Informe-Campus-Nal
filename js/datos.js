@@ -50,6 +50,8 @@ const ZONAS = [
     oferta: { cursos: 37, grupos: 169, cupos: 8600 },
     comunidad: { iglesias: 97, creyentes: 38800 },
     informadores: 838,
+    coordinadoresZonales: 2,
+    enlaceDelegacion: 66,
   },
   {
     id: "caribe",
@@ -65,6 +67,8 @@ const ZONAS = [
     oferta: { cursos: 23, grupos: 47, cupos: 2400 },
     comunidad: { iglesias: 63, creyentes: 25200 },
     informadores: 355,
+    coordinadoresZonales: 2,
+    enlaceDelegacion: 7,
   },
   {
     id: "antioquia-eje-cafetero",
@@ -80,6 +84,8 @@ const ZONAS = [
     oferta: { cursos: 26, grupos: 95, cupos: 4750 },
     comunidad: { iglesias: 111, creyentes: 44400 },
     informadores: 935,
+    coordinadoresZonales: 1,
+    enlaceDelegacion: 6,
   },
   {
     id: "pacifico",
@@ -95,6 +101,8 @@ const ZONAS = [
     oferta: { cursos: 27, grupos: 88, cupos: 4550 },
     comunidad: { iglesias: 131, creyentes: 52400 },
     informadores: 777,
+    coordinadoresZonales: 3,
+    enlaceDelegacion: 5,
   },
   {
     id: "sur-llanos",
@@ -110,6 +118,8 @@ const ZONAS = [
     oferta: { cursos: 20, grupos: 103, cupos: 5250 },
     comunidad: { iglesias: 113, creyentes: 45200 },
     informadores: 1113,
+    coordinadoresZonales: 2,
+    enlaceDelegacion: 7,
   },
   {
     id: "santanderes-boyaca",
@@ -125,6 +135,8 @@ const ZONAS = [
     oferta: { cursos: 16, grupos: 28, cupos: 1460 },
     comunidad: { iglesias: 88, creyentes: 30800 },
     informadores: 445,
+    coordinadoresZonales: 1,
+    enlaceDelegacion: 3,
   },
 ];
 
@@ -189,4 +201,6 @@ const TOTALES = {
   oferta: { cursos: 149, grupos: 530, cupos: 27010 },
   comunidad: { iglesias: 603, creyentes: 236800 },
   informadores: 4701,
+  coordinadoresZonales: 11,
+  enlaceDelegacion: 94,
 };
