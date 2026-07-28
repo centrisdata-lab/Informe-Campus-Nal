@@ -54,7 +54,7 @@ const ZONAS = [
   {
     id: "caribe",
     nombre: "Zona Caribe",
-    departamentos: ["Atlántico", "La Guajira", "Córdoba", "Cesar", "Sucre", "San Andrés"],
+    departamentos: ["Atlántico", "La Guajira", "Córdoba", "Sucre", "San Andrés"],
     color: "#0090A0",
     personal: {
       profesores: 74, tutores: 65, administradores: 34, coordinadora: 0,
@@ -114,7 +114,7 @@ const ZONAS = [
   {
     id: "santanderes-boyaca",
     nombre: "Santanderes & Boyacá",
-    departamentos: ["Santander", "Norte de Santander", "Boyacá"],
+    departamentos: ["Santander", "Norte de Santander", "Boyacá", "Cesar"],
     color: "#C0392B",
     personal: {
       profesores: 36, tutores: 44, administradores: 8, coordinadora: 0,

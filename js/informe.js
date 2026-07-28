@@ -12,6 +12,18 @@
   const pct = (parte, total) => (total ? ((parte / total) * 100) : 0);
 
   /* ---------------------------------------------------------
+     0. COBERTURA DEL ENCABEZADO
+     Se calcula desde ZONAS para no desincronizarse al mover
+     departamentos entre zonas.
+     --------------------------------------------------------- */
+  function renderCobertura() {
+    const el = document.getElementById("cobertura-texto");
+    if (!el) return;
+    const deps = ZONAS.reduce((n, z) => n + z.departamentos.length, 0);
+    el.textContent = `${ZONAS.length} zonas · ${deps} departamentos`;
+  }
+
+  /* ---------------------------------------------------------
      1. TARJETAS KPI
      --------------------------------------------------------- */
   function renderKpis() {
@@ -22,13 +34,14 @@
     const totalCursos = TOTALES.oferta.cursos;
     const totalGrupos = TOTALES.oferta.grupos;
     const totalCupos = TOTALES.oferta.cupos;
+    const totalDepartamentos = ZONAS.reduce((n, z) => n + z.departamentos.length, 0);
 
     const kpis = [
       {
         icon: "👥",
         label: "Cuerpo académico total",
         value: fmt.format(totalPersonal),
-        delta: `${ZONAS.length} zonas · 20 departamentos`,
+        delta: `${ZONAS.length} zonas · ${totalDepartamentos} departamentos`,
         bar: 100,
       },
       {
@@ -93,14 +106,14 @@
           <th>Iglesias</th>
           <th>Creyentes</th>
           <th>Informadores</th>
-          <th>% del total nacional</th>
+          <th>% de los cupos nacionales</th>
         </tr>
       </thead>`;
 
-    const zonasOrdenadas = [...ZONAS].sort((a, b) => b.personal.total - a.personal.total);
+    const zonasOrdenadas = [...ZONAS].sort((a, b) => b.oferta.cupos - a.oferta.cupos);
 
     const filas = zonasOrdenadas.map((z) => {
-      const share = pct(z.personal.total, TOTALES.personal.total);
+      const share = pct(z.oferta.cupos, TOTALES.oferta.cupos);
       return `
         <tr>
           <td class="cell-zona"><span class="zona-swatch" style="background:${z.color}"></span>${z.nombre}</td>
@@ -146,7 +159,7 @@
         .map((r) => `<tr><td>${r.label}</td><td>${fmt.format(z.personal[r.key])}</td></tr>`)
         .join("");
 
-      const sharePersonal = pct(z.personal.total, TOTALES.personal.total);
+      const shareCupos = pct(z.oferta.cupos, TOTALES.oferta.cupos);
       const cursosDeZona = CURSOS_DETALLE
         .filter((c) => c[z.id] > 0)
         .sort((a, b) => b[z.id] - a[z.id]);
@@ -183,8 +196,8 @@
                 <div class="zone-stat__label">Informadores</div>
               </div>
               <div class="zone-stat">
-                <div class="zone-stat__value">${sharePersonal.toFixed(1)}%</div>
-                <div class="zone-stat__label">Del total nacional</div>
+                <div class="zone-stat__value">${shareCupos.toFixed(1)}%</div>
+                <div class="zone-stat__label">De los cupos nacionales</div>
               </div>
             </div>
             <span class="zone-card__toggle" aria-hidden="true">+</span>
@@ -352,6 +365,7 @@
      Init
      --------------------------------------------------------- */
   document.addEventListener("DOMContentLoaded", () => {
+    renderCobertura();
     renderKpis();
     renderComparativoZonas();
     renderZonas();
