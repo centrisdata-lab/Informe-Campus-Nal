@@ -308,6 +308,13 @@ html, body {
 }
 .kpi-card:hover { transform: translateY(-3px); box-shadow: var(--sombra-card-hover); }
 .kpi-card.is-open:hover { transform: none; }
+/* Al abrirse, la tarjeta ocupa todo el ancho de la fila para que
+   la tabla de detalle tenga espacio real; el resto de tarjetas
+   sigue debajo. */
+.kpi-card.is-open {
+  grid-column: 1 / -1;
+  box-shadow: var(--sombra-card-hover);
+}
 
 .kpi-card__toggle {
   display: flex;
@@ -388,22 +395,22 @@ html, body {
   max-height: 0;
   transition: max-height 0.35s ease;
 }
-.kpi-card.is-open .kpi-card__detalle { max-height: 900px; }
+.kpi-card.is-open .kpi-card__detalle { max-height: 1400px; }
 
 .kpi-card__detalle-inner {
-  padding: 0 20px 18px;
+  padding: 4px 22px 22px;
   border-top: 1px solid var(--borde);
   margin-top: 2px;
 }
 .kpi-card__detalle-inner table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
-  margin-top: 12px;
+  font-size: 13.5px;
+  margin-top: 14px;
 }
 .kpi-card__detalle-inner th {
   text-align: left;
-  padding: 6px 4px;
+  padding: 7px 10px;
   font-size: 11px;
   font-weight: 800;
   text-transform: uppercase;
@@ -412,7 +419,7 @@ html, body {
   border-bottom: 1px solid var(--borde);
 }
 .kpi-card__detalle-inner td {
-  padding: 6px 4px;
+  padding: 7px 10px;
   border-bottom: 1px solid var(--borde);
   font-weight: 700;
   color: var(--texto-primario);
@@ -424,8 +431,29 @@ html, body {
   border-top: 2px solid var(--azul-marino);
   border-bottom: none;
 }
-.kpi-card__detalle-inner tbody { display: block; max-height: 260px; overflow-y: auto; }
-.kpi-card__detalle-inner thead, .kpi-card__detalle-inner tbody tr { display: table; width: 100%; table-layout: fixed; }
+
+/* Al abrirse a ancho completo, la lista se reparte en columnas
+   (cada fila es un bloque de tabla independiente) para aprovechar
+   el espacio horizontal en vez de quedar como una lista larga. */
+.kpi-card__detalle-inner thead { display: none; }
+.kpi-card__detalle-inner tbody {
+  display: block;
+  column-width: 230px;
+  column-gap: 24px;
+  max-height: 420px;
+  overflow-y: auto;
+}
+.kpi-card__detalle-inner tbody tr {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+}
+.kpi-card__detalle-inner tbody tr.fila-total {
+  font-family: var(--fuente-titulos);
+}
 
 /* ============================================================
    TARJETAS / GRÁFICOS
@@ -870,6 +898,35 @@ html, body {
   .zone-card__header { padding: 14px 16px; }
   .zone-card__content { padding: 4px 16px 18px; }
   .data-table { min-width: 760px; }
+  .kpi-card__detalle-inner {
+    padding: 4px 16px 18px;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  .kpi-card__detalle-inner table {
+    display: block;
+    max-width: 100%;
+  }
+  .kpi-card__detalle-inner tbody {
+    display: block;
+    max-width: 100%;
+    columns: initial !important;
+    column-width: initial !important;
+    column-count: initial !important;
+  }
+  .kpi-card__detalle-inner tbody tr {
+    display: flex !important;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+  .kpi-card__detalle-inner tbody tr td:first-child {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-wrap: break-word;
+  }
+  .kpi-card__detalle-inner tbody tr td:last-child { flex: 0 0 auto; }
 }
 
 @media (max-width: 420px) {

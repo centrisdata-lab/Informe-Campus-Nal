@@ -36,15 +36,23 @@
     const totalCupos = TOTALES.oferta.cupos;
     const totalDepartamentos = ZONAS.reduce((n, z) => n + z.departamentos.length, 0);
 
+    // Emoji por rol/concepto, para reconocer cada fila de un vistazo.
+    const emojiRol = {
+      profesores: "👩‍🏫", tutores: "🧑‍🏫", administradores: "🗂️", coordinadora: "🧭",
+      enlaceTutores: "🔗", apoyoPedagogico: "🧑‍🎓", coordinadorTutores: "🧑‍💼",
+      apoyoTutores: "🤝", responsableCurso: "📌",
+    };
+    const emojiZona = "📍";
+
     // Contenido del detalle desplegable de cada tarjeta: una mini
     // tabla de dos columnas (concepto / valor) que sustenta el total.
     const tablaRoles = `
       <table>
         <thead><tr><th>Rol</th><th>Total</th></tr></thead>
         <tbody>
-          ${ROLES.map((r) => `<tr><td>${r.label}</td><td>${fmt.format(TOTALES.personal[r.key])}</td></tr>`).join("")}
-          <tr><td>Enlace de profesores</td><td>${fmt.format(TOTALES.personal.enlaceProfesores)}</td></tr>
-          <tr class="fila-total"><td>Total cuerpo académico</td><td>${fmt.format(totalPersonal)}</td></tr>
+          ${ROLES.map((r) => `<tr><td>${emojiRol[r.key] || "•"} ${r.label}</td><td>${fmt.format(TOTALES.personal[r.key])}</td></tr>`).join("")}
+          <tr><td>🔗 Enlace de profesores</td><td>${fmt.format(TOTALES.personal.enlaceProfesores)}</td></tr>
+          <tr class="fila-total"><td>🧮 Total cuerpo académico</td><td>${fmt.format(totalPersonal)}</td></tr>
         </tbody>
       </table>`;
 
@@ -54,8 +62,8 @@
         <thead><tr><th>Curso</th><th>Grupos</th></tr></thead>
         <tbody>
           ${[...CURSOS_DETALLE].sort((a, b) => totalGruposCurso(b) - totalGruposCurso(a))
-            .map((c) => `<tr><td>${c.curso}</td><td>${fmt.format(totalGruposCurso(c))}</td></tr>`).join("")}
-          <tr class="fila-total"><td>Total grupos (todos los cursos)</td><td>${fmt.format(totalGrupos)}</td></tr>
+            .map((c) => `<tr><td>📖 ${c.curso}</td><td>${fmt.format(totalGruposCurso(c))}</td></tr>`).join("")}
+          <tr class="fila-total"><td>🧮 Total grupos (todos los cursos)</td><td>${fmt.format(totalGrupos)}</td></tr>
         </tbody>
       </table>`;
 
@@ -64,8 +72,8 @@
         <thead><tr><th>Zona</th><th>Grupos</th></tr></thead>
         <tbody>
           ${[...ZONAS].sort((a, b) => b.oferta.grupos - a.oferta.grupos)
-            .map((z) => `<tr><td>${z.nombre}</td><td>${fmt.format(z.oferta.grupos)}</td></tr>`).join("")}
-          <tr class="fila-total"><td>Total nacional</td><td>${fmt.format(totalGrupos)}</td></tr>
+            .map((z) => `<tr><td>${emojiZona} ${z.nombre}</td><td>${fmt.format(z.oferta.grupos)}</td></tr>`).join("")}
+          <tr class="fila-total"><td>🧮 Total nacional</td><td>${fmt.format(totalGrupos)}</td></tr>
         </tbody>
       </table>`;
 
@@ -74,8 +82,8 @@
         <thead><tr><th>Zona</th><th>Cupos</th></tr></thead>
         <tbody>
           ${[...ZONAS].sort((a, b) => b.oferta.cupos - a.oferta.cupos)
-            .map((z) => `<tr><td>${z.nombre}</td><td>${fmt.format(z.oferta.cupos)}</td></tr>`).join("")}
-          <tr class="fila-total"><td>Total nacional</td><td>${fmt.format(totalCupos)}</td></tr>
+            .map((z) => `<tr><td>${emojiZona} ${z.nombre}</td><td>${fmt.format(z.oferta.cupos)}</td></tr>`).join("")}
+          <tr class="fila-total"><td>🧮 Total nacional</td><td>${fmt.format(totalCupos)}</td></tr>
         </tbody>
       </table>`;
 
@@ -84,9 +92,9 @@
         <thead><tr><th>Zona</th><th>Informadores</th></tr></thead>
         <tbody>
           ${[...ZONAS].sort((a, b) => b.informadores - a.informadores)
-            .map((z) => `<tr><td>${z.nombre}</td><td>${fmt.format(z.informadores)}</td></tr>`).join("")}
-          <tr><td>Sin departamento asignado</td><td>${fmt.format(INFORMADORES_SIN_ZONA)}</td></tr>
-          <tr class="fila-total"><td>Total nacional</td><td>${fmt.format(TOTALES.informadores)}</td></tr>
+            .map((z) => `<tr><td>${emojiZona} ${z.nombre}</td><td>${fmt.format(z.informadores)}</td></tr>`).join("")}
+          <tr><td>❔ Sin departamento asignado</td><td>${fmt.format(INFORMADORES_SIN_ZONA)}</td></tr>
+          <tr class="fila-total"><td>🧮 Total nacional</td><td>${fmt.format(TOTALES.informadores)}</td></tr>
         </tbody>
       </table>`;
 
