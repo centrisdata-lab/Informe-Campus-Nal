@@ -297,6 +297,7 @@
           <th>Zona</th>
           ${rolesUsados.map((r) => `<th>${r.label}</th>`).join("")}
           <th>Coordinadores Zonales</th>
+          <th>Enlaces de curso</th>
           <th>Total</th>
         </tr>
       </thead>`;
@@ -306,6 +307,7 @@
         <td>${z.nombre}</td>
         ${rolesUsados.map((r) => `<td>${z.personal[r.key] ? fmt.format(z.personal[r.key]) : "—"}</td>`).join("")}
         <td>${fmt.format(z.coordinadoresZonales)}</td>
+        <td>${fmt.format(z.enlacesCurso)}</td>
         <td class="cell-total">${fmt.format(z.personal.total)}</td>
       </tr>
     `).join("");
@@ -315,6 +317,7 @@
         <td>Total general</td>
         ${rolesUsados.map((r) => `<td>${fmt.format(TOTALES.personal[r.key])}</td>`).join("")}
         <td>${fmt.format(TOTALES.coordinadoresZonales)}</td>
+        <td>${fmt.format(TOTALES.enlacesCurso)}</td>
         <td class="cell-total">${fmt.format(TOTALES.personal.total)}</td>
       </tr>
     `;
