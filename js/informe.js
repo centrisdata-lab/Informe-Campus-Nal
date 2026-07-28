@@ -285,13 +285,18 @@
     const table = document.getElementById("tabla-consolidada");
     if (!table) return;
 
-    const rolesUsados = ROLES.filter((r) => TOTALES.personal[r.key] > 0);
+    // "Coordinadora" (rol de personal, suma al total de 1.840) se
+    // excluye del recorrido genérico y se sustituye por la columna
+    // "Coordinadores Zonales" (dato aparte, no forma parte del
+    // cuerpo académico ni de ese total).
+    const rolesUsados = ROLES.filter((r) => r.key !== "coordinadora" && TOTALES.personal[r.key] > 0);
 
     const thead = `
       <thead>
         <tr>
           <th>Zona</th>
           ${rolesUsados.map((r) => `<th>${r.label}</th>`).join("")}
+          <th>Coordinadores Zonales</th>
           <th>Total</th>
         </tr>
       </thead>`;
@@ -300,6 +305,7 @@
       <tr>
         <td>${z.nombre}</td>
         ${rolesUsados.map((r) => `<td>${z.personal[r.key] ? fmt.format(z.personal[r.key]) : "—"}</td>`).join("")}
+        <td>${fmt.format(z.coordinadoresZonales)}</td>
         <td class="cell-total">${fmt.format(z.personal.total)}</td>
       </tr>
     `).join("");
@@ -308,6 +314,7 @@
       <tr class="fila-total">
         <td>Total general</td>
         ${rolesUsados.map((r) => `<td>${fmt.format(TOTALES.personal[r.key])}</td>`).join("")}
+        <td>${fmt.format(TOTALES.coordinadoresZonales)}</td>
         <td class="cell-total">${fmt.format(TOTALES.personal.total)}</td>
       </tr>
     `;

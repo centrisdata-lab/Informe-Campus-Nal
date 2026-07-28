@@ -67,7 +67,7 @@ const ZONAS = [
     oferta: { cursos: 23, grupos: 47, cupos: 2400 },
     comunidad: { iglesias: 63, creyentes: 25200 },
     informadores: 355,
-    coordinadoresZonales: 2,
+    coordinadoresZonales: 1,
     enlaceDelegacion: 7,
   },
   {
@@ -201,6 +201,6 @@ const TOTALES = {
   oferta: { cursos: 149, grupos: 530, cupos: 27010 },
   comunidad: { iglesias: 603, creyentes: 236800 },
   informadores: 4701,
-  coordinadoresZonales: 11,
+  coordinadoresZonales: 10,
   enlaceDelegacion: 94,
 };
